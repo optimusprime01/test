@@ -3,9 +3,9 @@ import csv
 import logging.config
 import yaml
 from expense_lib.expense import Expense
-from expense_lib.constants import BOFA
-from expense_lib.constants import AMEX
-from expense_lib.constants import DISCOVER
+from expense_lib.normalizer import get_expense_type
+from expense_lib.normalizer import normalizer_map
+
 
 log_config = yaml.load(open("logging.yml"), Loader=yaml.FullLoader)
 logging.config.dictConfig(log_config)
@@ -22,17 +22,17 @@ for file in files:
         header = header.strip()
     column_list = header.split(",")
     column_list = [name.strip() for name in column_list if name.strip() != ""]
-    if set(column_list) == set(BOFA):
-        read_type = "bofa"
-    elif set(column_list) == set(AMEX):
-        read_type = "amex"
-    elif set(column_list) == set(DISCOVER):
-        read_type = "discover"
+    read_type = get_expense_type(column_list)
+    if not read_type:
+        logger.error("Input type not found for - {}".format(column_list))
+        continue
+    normalizer_func = normalizer_map.get(read_type)
     logger.debug("Input type is - {}".format(read_type))
     csv_reader = csv.DictReader(open(file_path), delimiter=",")
     for row_dict in csv_reader:
         logger.debug(row_dict)
-        tmp_expense = Expense.from_dict(row_dict, expense_type=read_type)
+        tmp_norm_dict = normalizer_func(row_dict)
+        tmp_expense = Expense.from_dict(tmp_norm_dict)
         master_data.append(tmp_expense)
 master_data.sort()
 op_fields = ["Date", "Amount", "Category", "Description", "Address", "Reference", "Type"]

@@ -12,34 +12,15 @@ class Expense:
         self.expense_category = ""
 
     @classmethod
-    def from_dict(cls, input_map, expense_type):
+    def from_dict(cls, input_map):
         expense = cls()
-        if expense_type == "bofa":
-            tmp_amount = float(input_map.get("Amount", 0))
-            expense.expense_amount = abs(tmp_amount)
-            date_time_obj = datetime.strptime(input_map.get("Posted Date"), "%m/%d/%Y")
-            expense.expense_date = date_time_obj
-            expense.iscredit_bool = tmp_amount > 0
-            expense.expense_description = input_map.get("Payee")
-            expense.expense_address = input_map.get("Address")
-            expense.reference_number = input_map.get("Reference Number")
-        elif expense_type == "amex":
-            tmp_amount = float(input_map.get("Amount", 0))
-            expense.expense_amount = abs(tmp_amount)
-            date_time_obj = datetime.strptime(input_map.get("Date"), "%m/%d/%y")
-            expense.expense_date = date_time_obj
-            expense.iscredit_bool = tmp_amount < 0
-            expense.expense_description = input_map.get("Description")
-            expense.reference_number = input_map.get("Reference")
-            expense.expense_category = input_map.get("Category")
-        elif expense_type == "discover":
-            tmp_amount = float(input_map.get("Amount", 0))
-            expense.expense_amount = abs(tmp_amount)
-            date_time_obj = datetime.strptime(input_map.get("Post Date"), "%m/%d/%Y")
-            expense.expense_date = date_time_obj
-            expense.iscredit_bool = tmp_amount < 0
-            expense.expense_description = input_map.get("Description")
-            expense.expense_category = input_map.get("Category")
+        expense.expense_amount = input_map.get("amount", 0)
+        expense.expense_date = input_map.get("date")
+        expense.iscredit_bool = input_map.get("is_credit")
+        expense.expense_description = input_map.get("description", "")
+        expense.expense_address = input_map.get("address", "")
+        expense.reference_number = input_map.get("ref_num", "")
+        expense.expense_category = input_map.get("category", "")
         return expense
 
     @property
