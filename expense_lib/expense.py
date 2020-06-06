@@ -2,6 +2,7 @@ from datetime import datetime
 
 
 class Expense:
+
     def __init__(self):
         self.expense_date = None
         self.expense_amount = 0

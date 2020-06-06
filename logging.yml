@@ -8,7 +8,7 @@ handlers:
     formatter: brief
   file:
     class: logging.handlers.RotatingFileHandler
-    filename: gem.log
+    filename: expense.log
     level: DEBUG
     maxBytes: 10240000
     backupCount: 2
