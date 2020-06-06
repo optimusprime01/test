@@ -1,4 +1,3 @@
-import sys
 from expense_lib.expense import Expense
 
 

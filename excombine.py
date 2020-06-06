@@ -3,7 +3,9 @@ import csv
 import logging.config
 import yaml
 from expense_lib.expense import Expense
-from expense_lib.constants import *
+from expense_lib.constants import BOFA
+from expense_lib.constants import AMEX
+from expense_lib.constants import DISCOVER
 
 log_config = yaml.load(open("logging.yml"), Loader=yaml.FullLoader)
 logging.config.dictConfig(log_config)
