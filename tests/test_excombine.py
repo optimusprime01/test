@@ -21,6 +21,7 @@ def test_Expense_basic():
     test_data["amount"] = 10000.01
     expense3 = Expense.from_dict(test_data)
     assert expense3 == expense1
+    assert expense3 is not expense1
 
     test_data["date"] = datetime.strptime("1/9/19", "%m/%d/%y")
     expense4 = Expense.from_dict(test_data)

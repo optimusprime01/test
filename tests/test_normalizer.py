@@ -2,6 +2,7 @@ from datetime import datetime
 from expense_lib.normalizer import normalizer_map
 from expense_lib.normalizer import get_expense_type
 
+
 def test_amex():
     test_data = {
         "Date": "1/9/20",
