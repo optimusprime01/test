@@ -1,7 +1,5 @@
 import sys
-
-sys.path.append("..")
-from excombine import Expense
+from expense_lib.expense import Expense
 
 
 def test_Expense_basic():

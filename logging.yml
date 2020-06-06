@@ -1,0 +1,28 @@
+version: 1
+disable_existing_loggers: True
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: INFO
+    stream: ext://sys.stdout
+    formatter: brief
+  file:
+    class: logging.handlers.RotatingFileHandler
+    filename: gem.log
+    level: DEBUG
+    maxBytes: 10240000
+    backupCount: 2
+    formatter: detailed
+formatters:
+  detailed:
+    format: '%(asctime)s %(levelname)-8s %(name)-15s %(message)s'
+  brief:
+    format: '%(asctime)-15s %(levelname)s :: %(message)s'
+  default:
+    format: '%(message)s'
+loggers:
+  "":
+    handlers:
+      - console
+    level: INFO
+    propagate: False
