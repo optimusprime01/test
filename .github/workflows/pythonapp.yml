@@ -34,4 +34,13 @@ jobs:
       run: |
         export PYTHONPATH=./:${PYTHONPATH}
         pytest
+
+  deploy:
+    name: AWS upload to lambda
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: AWS check
+        run: |
         aws --version
