@@ -39,6 +39,6 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: AWS check
-        run: |
+    - name: AWS check
+      run: |
         aws --version
