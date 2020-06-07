@@ -39,6 +39,23 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
     - name: AWS check
       run: |
         aws --version
+    - name: Install zip/unzip
+      run: |
+        sudo apt install zip -y
+        sudo apt install unzip -y
+    - name: package expenselib
+      run: |
+        zip expensecode.zip excombine.py expense_lib/*
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-west-2
+    - name: AWS upload lambda
+      run: |
+        aws lambda update-function-code --function-name expense-test1 --zip-file fileb://expensecode.zip
