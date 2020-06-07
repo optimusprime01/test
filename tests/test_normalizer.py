@@ -84,3 +84,26 @@ def test_discover():
     test_data["Amount"] = "-400.00"
     normalized_data = normalizer_map.get("discover")(test_data)
     assert normalized_data["is_credit"] is True
+
+
+
+def test_apple():
+    test_data = {
+        "Transaction Date": "12/12/2019",
+        "Clearing Date": "12/16/2019",
+        "Description": "Apple test",
+        "Amount (USD)": "4.99",
+        "Category": "Other",
+        "Merchant": "Walgreens",
+        "Type": "Purchase",
+    }
+    assert get_expense_type(list(test_data.keys())) == "apple"
+    normalized_data = normalizer_map.get("apple")(test_data)
+    assert normalized_data["amount"] == 4.99
+    assert normalized_data["is_credit"] is False
+    assert normalized_data["description"] == "Apple test"
+    assert normalized_data["category"] == "Other"
+
+    test_data["Amount (USD)"] = "-400.00"
+    normalized_data = normalizer_map.get("apple")(test_data)
+    assert normalized_data["is_credit"] is True
