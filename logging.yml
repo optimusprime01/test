@@ -24,5 +24,6 @@ loggers:
   "":
     handlers:
       - console
-    level: INFO
+      - file
+    level: DEBUG
     propagate: False

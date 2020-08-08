@@ -1,0 +1,68 @@
+{
+  "bofa": {
+    "csv_header": ["Posted Date", "Reference Number", "Payee", "Address", "Amount"],
+    "source": {
+      "amount": "Amount",
+      "date": "Posted Date",
+      "description": "Payee",
+      "address": "Address",
+      "ref_num": "Reference Number"
+    },
+    "format": {
+      "date": "%m/%d/%Y",
+      "credit_amount": "positive"
+    }
+  },
+  "amex": {
+    "csv_header": ["Date", "Reference", "Description", "Card Member", "Card Number", "Amount", "Category", "Type"],
+    "source": {
+      "amount": "Amount",
+      "date": "Date",
+      "description": "Description",
+      "ref_num": "Reference",
+      "category": "Category"
+    },
+    "format": {
+      "date": "%m/%d/%y",
+      "credit_amount": "negative"
+    }
+  },
+  "amex_ytd": {
+    "csv_header": ["Date", "Description", "Card Member", "Account #", "Amount"],
+    "source": {
+      "amount": "Amount",
+      "date": "Date",
+      "description": "Description"
+    },
+    "format": {
+      "date": "%m/%d/%y",
+      "credit_amount": "negative"
+    }
+  },
+  "discover": {
+    "csv_header": ["Trans. Date", "Post Date", "Description", "Amount", "Category"],
+    "source": {
+      "amount": "Amount",
+      "date": "Post Date",
+      "description": "Description",
+      "category": "Category"
+    },
+    "format": {
+      "date": "%m/%d/%Y",
+      "credit_amount": "negative"
+    }
+  },
+  "apple": {
+    "csv_header": ["Transaction Date", "Clearing Date", "Description", "Merchant", "Category", "Type", "Amount (USD)"],
+    "source": {
+      "amount": "Amount (USD)",
+      "date": "Clearing Date",
+      "description": "Description",
+      "category": "Category"
+    },
+    "format": {
+      "date": "%m/%d/%Y",
+      "credit_amount": "negative"
+    }
+  }
+}

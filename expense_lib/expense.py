@@ -1,9 +1,9 @@
-from datetime import datetime
+EXPENSE_MAP_HEADER = ["Date", "Amount", "Category", "Description", "Address", "Reference", "Type", "Bank"]
 
 
 class Expense:
-
     def __init__(self):
+        self.bank = None
         self.expense_date = None
         self.expense_amount = 0
         self.iscredit_bool = None
@@ -15,6 +15,7 @@ class Expense:
     @classmethod
     def from_dict(cls, input_map):
         expense = cls()
+        expense.bank = input_map.get("bank", "")
         expense.expense_amount = input_map.get("amount", 0)
         expense.expense_date = input_map.get("date")
         expense.iscredit_bool = input_map.get("is_credit")
@@ -52,6 +53,7 @@ class Expense:
             "Address": self.expense_address.strip(),
             "Description": self.expense_description.strip(),
             "Type": type,
+            "Bank": self.bank,
         }
         return output_map
 

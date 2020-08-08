@@ -7,10 +7,11 @@ log_config = yaml.load(open("logging.yml"), Loader=yaml.FullLoader)
 logging.config.dictConfig(log_config)
 
 from expense_lib.expense import Expense
+from expense_lib.expense import EXPENSE_MAP_HEADER
 from expense_lib.normalizer import get_expense_type
-from expense_lib.normalizer import normalizer_map
+from expense_lib.normalizer import NormalizerBuilder
+from expense_lib.normalizer import normalize
 from expense_lib.utils import get_csv_header
-from expense_lib.constants import EXPENSE_MAP_HEADER
 
 
 logger = logging.getLogger(__name__)
@@ -20,19 +21,24 @@ if not os.path.exists(dst_path):
     os.makedirs(dst_path)
 files = os.listdir(src_path)
 master_data = []
+
+builder = NormalizerBuilder("./config/normalize.json")
+normalizer_map = builder.get_config()
+
 for file in files:
     file_path = os.path.join(src_path, file)
     column_list = get_csv_header(file_path)
-    read_type = get_expense_type(column_list)
+    read_type = get_expense_type(column_list, normalizer_map)
     if not read_type:
         logger.error("Input type not found for - {}".format(column_list))
         continue
-    normalizer_func = normalizer_map.get(read_type)
+    normalizer_config = normalizer_map.get(read_type)
     logger.debug("Input type is - {}".format(read_type))
     csv_reader = csv.DictReader(open(file_path), delimiter=",")
     for row_dict in csv_reader:
         logger.debug(row_dict)
-        tmp_norm_dict = normalizer_func(row_dict)
+        tmp_norm_dict = normalize(row_dict, normalizer_config)
+        logger.debug(tmp_norm_dict)
         tmp_expense = Expense.from_dict(tmp_norm_dict)
         master_data.append(tmp_expense)
 master_data.sort()
