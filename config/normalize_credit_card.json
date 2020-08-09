@@ -39,6 +39,21 @@
       "credit_amount": "negative"
     }
   },
+  "amex_detailed": {
+    "csv_header": ["Date", "Description", "Card Member", "Account #", "Amount", "Extended Details",
+      "Appears On Your Statement As", "Address", "City/State", "Zip Code", "Country", "Reference", "Category"],
+    "source": {
+      "amount": "Amount",
+      "date": "Date",
+      "description": "Appears On Your Statement As",
+      "category": "Category",
+      "ref_num": "Reference"
+    },
+    "format": {
+      "date": "%m/%d/%y",
+      "credit_amount": "negative"
+    }
+  },
   "discover": {
     "csv_header": ["Trans. Date", "Post Date", "Description", "Amount", "Category"],
     "source": {

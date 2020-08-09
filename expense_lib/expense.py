@@ -40,10 +40,10 @@ class Expense:
     @property
     def map(self):
         if self.iscredit_bool:
-            amount = self.amount * -1
+            amount = self.amount
             type = "CREDIT"
         else:
-            amount = self.amount
+            amount = self.amount * -1
             type = "DEBIT"
         output_map = {
             "Date": self.date.strip(),

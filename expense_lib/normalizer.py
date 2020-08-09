@@ -81,7 +81,11 @@ def get_expense_type(header_list, normalizer_map):
 def normalize(input_map, normalize_config):
     output_map = dict()
     source_map = normalize_config.source_map
-    tmp_amount = float(input_map.get(source_map.get("amount"), 0))
+    tmp_amount = input_map.get(source_map.get("amount"), 0)
+    try:
+        tmp_amount = float(tmp_amount)
+    except ValueError:
+        tmp_amount = 0.0
     output_map["bank"] = normalize_config.bank
     output_map["amount"] = abs(tmp_amount)
     date_time_obj = datetime.strptime(input_map.get(source_map.get("date")), normalize_config.date_format)

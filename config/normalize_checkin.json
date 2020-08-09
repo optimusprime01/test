@@ -1,0 +1,26 @@
+{
+  "bofa": {
+    "csv_header": ["Date", "Description", "Amount", "Running Bal."],
+    "source": {
+      "amount": "Amount",
+      "date": "Date",
+      "description": "Description"
+    },
+    "format": {
+      "date": "%m/%d/%Y",
+      "credit_amount": "positive"
+    }
+  },
+  "chase": {
+    "csv_header": ["Details", "Posting Date", "Description", "Amount", "Type", "Balance", "Check or Slip #"],
+    "source": {
+      "amount": "Amount",
+      "date": "Posting Date",
+      "description": "Description"
+    },
+    "format": {
+      "date": "%m/%d/%Y",
+      "credit_amount": "positive"
+    }
+  }
+}

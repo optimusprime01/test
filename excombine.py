@@ -1,7 +1,9 @@
 import os
+import sys
 import csv
 import logging.config
 import yaml
+import argparse
 
 log_config = yaml.load(open("logging.yml"), Loader=yaml.FullLoader)
 logging.config.dictConfig(log_config)
@@ -14,16 +16,29 @@ from expense_lib.normalizer import normalize
 from expense_lib.utils import get_csv_header
 
 
+parser = argparse.ArgumentParser(prog=sys.argv[0], add_help=True)
+parser.add_argument("-m", "--mode", action="store", default="credit_card", type=str, help="Choose the mode")
+args = parser.parse_args()
+
 logger = logging.getLogger(__name__)
-src_path = os.path.abspath("./data")
-dst_path = os.path.abspath("./output-data")
+if args.mode == "checkin":
+    src_path = os.path.abspath("./data/checkin")
+    dst_path = os.path.abspath("./output-data/checkin/")
+    builder = NormalizerBuilder("config/normalize_checkin.json")
+elif args.mode == "credit_card":
+    src_path = os.path.abspath("./data/credit_card")
+    dst_path = os.path.abspath("./output-data/cc/")
+    builder = NormalizerBuilder("config/normalize_credit_card.json")
+else:
+    print("Unknown mode - {0}".format(args.mode))
+    sys.exit(98)
+
+normalizer_map = builder.get_config()
 if not os.path.exists(dst_path):
     os.makedirs(dst_path)
 files = os.listdir(src_path)
 master_data = []
 
-builder = NormalizerBuilder("./config/normalize.json")
-normalizer_map = builder.get_config()
 
 for file in files:
     file_path = os.path.join(src_path, file)
